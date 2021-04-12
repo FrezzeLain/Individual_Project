@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "removeComments": true,
+        "outDir": "js",
+        "sourceMap": true,
+        "outFile": "main.js"
+    }
+}

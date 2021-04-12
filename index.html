@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <title>Пятнашки - WEB</title>
+</head>
+<body>
+    <header>
+        <nav class="flex justify-center align-center">
+            <!-- Блок "Шапка" -->
+            <div>
+                <h1 class="h1Main">Пятнашки.WEB</h1>
+            </div>
+        </nav>
+    </header>
+    
+        <div class="settings flex justify-center column" id="settings">
+            <!-- Блок управления приложением -->
+            <div class="flex column justify-center">
+                <!-- Блок выбора сложности игры -->
+                <select name="Difficulty" id="SelectAmount">
+                    <option value="9">Легкий [ 3 x 3 ]</option>
+                    <option value="16">Средний [ 4 x 4 ]</option>
+                    <option value="25">Тяжелый [ 5 x 5 ]</option>
+                </select>
+            </div>
+            <button class="btn btn-primary danger invisible" id="Surrender">Сдаться</button>
+            <button class="btn btn-primary yellow invisible" id="Reload">Перемешать</button>
+            <button class="btn btn-primary green invisible" id="Play">Начать</button>
+            <div>
+                <!-- Блок выбора картинки пользователем -->
+                <input type="file" name="YourFile" accept="image/jpeg, image/png, image/png" class="Input FileInput invisible" id="NewImage">
+            </div>
+            <button class="btn btn-primary green" id="NextButton">Далее</button>
+        </div>
+        <!-- Блок с отображением приложения -->
+        <div class="Game Image invisible" id="MainBlock">
+            <!-- JS - файлы создают DOM - структуру автоматически -->
+        </div>
+        <div class="playAgain column justify-center align-center invisible" id="Again">
+            <h1 class="h1Result" id="Result"></h1>
+            <button id="PlayAgain" class="btn btn-primary green">Ещё раз</button>
+        </div>
+    
+    <!-- Подключение основного скрипта -->
+    <script src="Front/Script.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.Game{
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.Image{
+    background-repeat: no-repeat;
+}
+
+.absolute{
+    position: absolute;
+}
+
+.invisible {
+    display: none;
+}
+
+.overflow{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.7);
+}
+
+.settings{
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+}
+
+.h1Main{
+    font-size: 30px;
+    font-family: sans-serif;
+    padding: 20px 10px 0 10px;
+}
+
+.h1Result{
+    text-transform: uppercase;
+    font-family: sans-serif;
+    font-weight: 100;
+    margin-top: 100px;
+}
+
+.flex{
+    display: flex;
+}
+
+.justify-center{
+    justify-content: center;
+}
+
+.align-center{
+    align-items: center;
+}
+
+#SelectAmount{
+    font-size: 18px;
+    padding: 5px 10px 5px 2px;
+}
+
+.column{
+    flex-direction: column;
+}
+
+.btn{
+    padding: 10px 20px;
+    font-size: 16px;
+    min-width: 130px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.Input{
+    font-size: 16px;
+}
+
+.green{
+    background-color: #2ecc71;
+}
+
+.yellow{
+    background-color: #f1c40f;
+}
+
+.danger{
+    background-color: #e74c3c;
+}
