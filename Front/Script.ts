@@ -41,17 +41,17 @@
 
     FileInput.addEventListener('change' , (ev) => {
 
-        StartMassivOfElements.length = 0;
+        StartMassivOfElements.length = 0; /* Обнуление массива на случай, если пользователь начнёт заново */
 
-        let BackGround: string | ArrayBuffer;
-        let File: Blob = FileInput.files[0];
+        let File: Blob = FileInput.files[0]; /* Считывание файла пользователя */
         let Reader: FileReader = new FileReader();
         Reader.readAsDataURL(File);
-        Reader.onload = () => {
-            const AmountItems = Number(CurrentDifficulty.value);
-            const CurrentStyles = GetCurrentStyles(AmountItems);
-            StartMassivOfElements = GenerateNewImage(AmountItems, CurrentStyles, Reader.result);
-            RenderBlocks(StartMassivOfElements);
+        Reader.onload = () => { /* Действия при успешном считывании */
+            const AmountItems = Number(CurrentDifficulty.value); /* Получение текущей сложности */
+            const CurrentStyles = GetCurrentStyles(AmountItems); /* Получени стилей в зависимости от сложности */
+            StartMassivOfElements = GenerateNewImage(AmountItems, CurrentStyles, Reader.result); /* Генерация нового массива */
+            RenderBlocks(StartMassivOfElements); /* Отрисовка массива */
+            /* Изменение стилей различных элементов */
             FileInput.classList.add('invisible');
             ReloadButton.classList.remove('invisible');
             MainBlockOfTheGame.classList.remove('invisible');
@@ -101,6 +101,14 @@
             Next.classList.add('invisible');
         }
     });
+
+    SurrenderButton.addEventListener('click', () => {
+        endGame();
+    });
+
+    PlayAgain.addEventListener('click', () => {
+        endGame();
+    })
 /* Конец EventListeners */
 
 /* Методы */
@@ -114,19 +122,19 @@
      */
 
     function GenerateNewImage(AmountItems: number, ElementsStyles: number, BackImage: string | ArrayBuffer): Array<HTMLDivElement>{
-        let ResultMassiv: Array<HTMLDivElement> = [];
+        let ResultMassiv: Array<HTMLDivElement> = []; /* Объявление массива */
 
-        for (let index = 0; index < AmountItems; index++) {
-            const DivElement: HTMLDivElement = document.createElement('div');
-            DivElement.className = 'PieceOfImage absolute';
-            DivElement.style.width = DivElement.style.height = `${ElementsStyles}px`;
-            DivElement.style.backgroundImage = `url(${BackImage})`;
-            DivElement.id = `i${index}`;
+        for (let index = 0; index < AmountItems; index++) { /* Перебор каждого элемента */
+            const DivElement: HTMLDivElement = document.createElement('div'); /* Создание нового элемента */
+            DivElement.className = 'PieceOfImage absolute'; /* Добавление классов элементу */
+            DivElement.style.width = DivElement.style.height = `${ElementsStyles}px`; /* Позиционирование элемента */
+            DivElement.style.backgroundImage = `url(${BackImage})`; /* Ставим картинку пользовтаеля на зданий фон */
+            DivElement.id = `i${index}`; /* Присваиваем блоку ID */
             
-            ResultMassiv.push(DivElement);        
+            ResultMassiv.push(DivElement); /* Добавляем элемент в массив */ 
         }
 
-        return ResultMassiv;
+        return ResultMassiv; /* Возвращаем получившийся массив */
     }
 
     /**
@@ -159,30 +167,24 @@
         
         Massiv.forEach( (DIV) => {
             i++;
-            /* Положение элемента и заднего фона в зависимтости от ID */
+            /* Положение элемента в зависимтости от его очереди в массиве */
             let Id = getIDofElement(DIV) + 1;
 
             let CurrentRow = Math.ceil(i / CountInRow);
             let CurrentColumn = getColumn(i, CountInRow, CurrentRow);
-
             let CurrentX = (CurrentColumn - 1) * WidhtAndHeight;
             let CurrentY = (CurrentRow - 1) * WidhtAndHeight;
-
             DIV.style.left = `${CurrentX}px`;
             DIV.style.top = `${CurrentY}px`;
-
+            /* Задний фон блока в зависимости от его ID */
             let CurrentRowForBack = Math.ceil(Id / CountInRow);
             let CurrentColumnForBack = getColumn(Id, CountInRow, CurrentRowForBack);
-
             let CurrentXForBack = (CurrentColumnForBack - 1) * WidhtAndHeight;
             let CurrentYForBack = (CurrentRowForBack - 1) * WidhtAndHeight;
-
             DIV.style.backgroundPosition = `left -${CurrentXForBack}px top -${CurrentYForBack}px`;
-
+            /* Добавить блок на страницу */
             MainBlockOfTheGame.append(DIV);
         });
-
-        CurrentDifficulty.classList.add('invisible');
     }
 
     /**
@@ -320,4 +322,14 @@
         }
 
         return true;
+     }
+
+     /**
+      * Функция окончания игры
+      * @element Кнопка, на которую нажали
+      * 
+      */
+
+     function endGame(): void{
+        location.reload();
      }

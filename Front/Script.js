@@ -34,16 +34,16 @@ var IsFirstClick = true;
 var PrevElement;
 /* EventListeners */
 FileInput.addEventListener('change', function (ev) {
-    StartMassivOfElements.length = 0;
-    var BackGround;
-    var File = FileInput.files[0];
+    StartMassivOfElements.length = 0; /* Обнуление массива на случай, если пользователь начнёт заново */
+    var File = FileInput.files[0]; /* Считывание файла пользователя */
     var Reader = new FileReader();
     Reader.readAsDataURL(File);
     Reader.onload = function () {
-        var AmountItems = Number(CurrentDifficulty.value);
-        var CurrentStyles = GetCurrentStyles(AmountItems);
-        StartMassivOfElements = GenerateNewImage(AmountItems, CurrentStyles, Reader.result);
-        RenderBlocks(StartMassivOfElements);
+        var AmountItems = Number(CurrentDifficulty.value); /* Получение текущей сложности */
+        var CurrentStyles = GetCurrentStyles(AmountItems); /* Получени стилей в зависимости от сложности */
+        StartMassivOfElements = GenerateNewImage(AmountItems, CurrentStyles, Reader.result); /* Генерация нового массива */
+        RenderBlocks(StartMassivOfElements); /* Отрисовка массива */
+        /* Изменение стилей различных элементов */
         FileInput.classList.add('invisible');
         ReloadButton.classList.remove('invisible');
         MainBlockOfTheGame.classList.remove('invisible');
@@ -87,6 +87,12 @@ Next.addEventListener('click', function () {
         Next.classList.add('invisible');
     }
 });
+SurrenderButton.addEventListener('click', function () {
+    endGame();
+});
+PlayAgain.addEventListener('click', function () {
+    endGame();
+});
 /* Конец EventListeners */
 /* Методы */
 /**
@@ -97,16 +103,16 @@ Next.addEventListener('click', function () {
  * @returns Возвращает массив с элементами.
  */
 function GenerateNewImage(AmountItems, ElementsStyles, BackImage) {
-    var ResultMassiv = [];
-    for (var index = 0; index < AmountItems; index++) {
-        var DivElement = document.createElement('div');
-        DivElement.className = 'PieceOfImage absolute';
-        DivElement.style.width = DivElement.style.height = ElementsStyles + "px";
-        DivElement.style.backgroundImage = "url(" + BackImage + ")";
-        DivElement.id = "i" + index;
-        ResultMassiv.push(DivElement);
+    var ResultMassiv = []; /* Объявление массива */
+    for (var index = 0; index < AmountItems; index++) { /* Перебор каждого элемента */
+        var DivElement = document.createElement('div'); /* Создание нового элемента */
+        DivElement.className = 'PieceOfImage absolute'; /* Добавление классов элементу */
+        DivElement.style.width = DivElement.style.height = ElementsStyles + "px"; /* Позиционирование элемента */
+        DivElement.style.backgroundImage = "url(" + BackImage + ")"; /* Ставим картинку пользовтаеля на зданий фон */
+        DivElement.id = "i" + index; /* Присваиваем блоку ID */
+        ResultMassiv.push(DivElement); /* Добавляем элемент в массив */
     }
-    return ResultMassiv;
+    return ResultMassiv; /* Возвращаем получившийся массив */
 }
 /**
  * Функция для получния ширины и высоты каждого элемента в игре.
@@ -136,7 +142,7 @@ function RenderBlocks(Massiv) {
     var i = 0;
     Massiv.forEach(function (DIV) {
         i++;
-        /* Положение элемента и заднего фона в зависимтости от ID */
+        /* Положение элемента в зависимтости от его очереди в массиве */
         var Id = getIDofElement(DIV) + 1;
         var CurrentRow = Math.ceil(i / CountInRow);
         var CurrentColumn = getColumn(i, CountInRow, CurrentRow);
@@ -144,14 +150,15 @@ function RenderBlocks(Massiv) {
         var CurrentY = (CurrentRow - 1) * WidhtAndHeight;
         DIV.style.left = CurrentX + "px";
         DIV.style.top = CurrentY + "px";
+        /* Задний фон блока в зависимости от его ID */
         var CurrentRowForBack = Math.ceil(Id / CountInRow);
         var CurrentColumnForBack = getColumn(Id, CountInRow, CurrentRowForBack);
         var CurrentXForBack = (CurrentColumnForBack - 1) * WidhtAndHeight;
         var CurrentYForBack = (CurrentRowForBack - 1) * WidhtAndHeight;
         DIV.style.backgroundPosition = "left -" + CurrentXForBack + "px top -" + CurrentYForBack + "px";
+        /* Добавить блок на страницу */
         MainBlockOfTheGame.append(DIV);
     });
-    CurrentDifficulty.classList.add('invisible');
 }
 /**
  * Функция вычисления текущей колонки.
@@ -283,4 +290,12 @@ function CheckMassivs(Old, New) {
         ;
     }
     return true;
+}
+/**
+ * Функция окончания игры
+ * @element Кнопка, на которую нажали
+ *
+ */
+function endGame() {
+    location.reload();
 }
